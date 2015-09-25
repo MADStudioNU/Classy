@@ -1,14 +1,16 @@
 var Classy$Module = require('clasy/module')
-  , Classy$Class$GeneratesModel = require('classy/modules/class/generates-model.js')
+  , Classy$Class$GeneratesModel = require('./generates-model.js').moduleDef
 
-var IsInstance = Classy$Module.$Class(function Classy$Class$WithIsInstance (c) {
+function Classy$Class$IsInstance (classyClass) {
   // Make sure we get a model for instance checking
-  c = Classy$Class$GeneratesModel(c);
+  classyClass = classyClass.model
+    ? classyClass
+    : Classy$Class$GeneratesModel(classyClass);
 
-  c.isInstance = function (object) {
+  classyClass.isInstance = function (object) {
     var i, field, value,
-        fields = c.fields,
-        values = c.values,
+        fields = classyClass.fields,
+        values = classyClass.values,
         len = fields.length
     for (i = 0; i < len, field = fields[i], value = values[++i];) {
       var objectValue = object[field];
@@ -18,6 +20,10 @@ var IsInstance = Classy$Module.$Class(function Classy$Class$WithIsInstance (c) {
     }
     return true;
   }
-})
+}
+var Classy$IsInstance = Classy$Module.$Class(Classy$Class$IsInstance)
 
-module.exports = IsInstance;
+module.exports = {
+  module   : Classy$IsInstance,
+  moduleDef: Classy$Class$IsInstance
+}

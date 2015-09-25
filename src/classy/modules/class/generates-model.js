@@ -30,13 +30,17 @@ var classModel = function (classyClass, classFields, classFieldValues) {
   return classModel;
 }
 
-var GeneratesModel = Classy$Module.$Class(function Classy$Class$GeneratesModel (classyClass) {
+var Classy$Class$GeneratesModel = function (classyClass) {
   var reference = classyClass();
   classyClass.fields = classFields(reference);
   classyClass.values = classValues(reference, classyClass.fields);
   classyClass.model  = classModel(reference, classyClass.fields, classyClass.values);
-})
+}
 
-GeneratesModel.NoDefault = NoDefault;
+var Classy$GeneratesModel = Classy$Module.$Class(Classy$Class$GeneratesModel)
 
-module.exports = GeneratesModel;
+module.exports = {
+  module   : Classy$GeneratesModel,
+  moduleDef: Classy$Class$GeneratesModel,
+  NoDefault: NoDefault
+};

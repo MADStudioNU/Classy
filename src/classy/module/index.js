@@ -8,7 +8,8 @@ var Classy$ModuleForType = function (type) {
       else if (type == 'class') {
         moduleClassy = function Classy$WithModules (nArgs, constructor) {
           var ClassyImpl$Class = Classy(nArgs, constructor);
-          return moduleFn(ClassyImpl$Class);
+          moduleFn(ClassyImpl$Class);
+          return ClassyImpl$Class;
         }
       }
 

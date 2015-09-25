@@ -1,6 +1,6 @@
 var Classy$Module = require('classy/module');
 
-var Classy$Extensible = Classy$Module.$Core(function (ClassyImpl) {
+var ClassyExtend = function (ClassyImpl) {
   ClassyImpl.extend = function Classy$Extensible$Extend (extension) {
     var extendedBody = function Classy$Extended (nArgs, constructor) {
       if (!constructor) constructor = nArgs, nArgs = 0
@@ -12,6 +12,11 @@ var Classy$Extensible = Classy$Module.$Core(function (ClassyImpl) {
     }
     return Classy$Extensible(extendedBody);
   }
-})
+}
 
-module.exports = Classy$Extensible;
+var Classy$Extensible = Classy$Module.$Core(ClassyExtend)
+
+module.exports = {
+  module   : Classy$Extensible,
+  moduleDef: ClassyExtend
+}

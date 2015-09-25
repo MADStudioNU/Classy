@@ -86,11 +86,11 @@ Animal.model  // => { type: NoDefault, breed: NoDefault, toString: function () {
 
 #### WTH is NoDefault?
 
-It's a thunk that returns itself. You can get access to it as a field of
-Classy$Class$GeneratesModel.
+It's a thunk that returns itself. You can get access to it by `require`-ing the
+generates-model Classy Class Module.
 
 ```js
-Classy$Class$GeneratesModel.NoDefault() // => NoDefault
+require('classy/modules/class/generates-model.js').NoDefault() // => NoDefault
 ```
 
 #### Okay, so why?
