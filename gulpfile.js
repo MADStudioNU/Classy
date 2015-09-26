@@ -48,12 +48,21 @@ gulp.task('test', [ 'bundle' ], function (done) {
     configFile: __dirname + '/karma.conf.js',
     singleRun: true
   }, done)
-  return server.start();
+  server.start();
+})
+
+gulp.task('test:travis', [ 'bundle' ], function (done) {
+  var server = new karma.Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true,
+    browsers: [ 'PhantomJS', 'Firefox' ]
+  }, done);
+  server.start();
 })
 
 gulp.task('tdd', [ 'bundle:watch' ], function (done) {
   var server = new karma.Server({
-    configFile: __dirname + '/karma.conf.js'
+    configFile: __dirname + '/karma.conf.js',
   }, done)
   return server.start();
 })
