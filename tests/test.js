@@ -1,9 +1,3 @@
-describe('Classy is around, yeah?', function () {
-  it('Can find Classy', function () {
-    expect(Classy).toBeDefined();
-  })
-})
-
 describe('Classy', function () {
   var c = Classy(function (self) {});;
 
@@ -19,13 +13,18 @@ describe('Classy', function () {
 })
 
 describe('Simple ClassyClass', function () {
-  var c = Classy(function (self) {
-    self.a = 7;
-    self.b = '5';
-    self.c = self.a + +self.b;
-  })
 
-  var example = c();
+  var c, example
+
+  beforeAll(function () {
+    c = Classy(function (self) {
+      self.a = 7;
+      self.b = '5';
+      self.c = self.a + +self.b;
+    })
+
+    example = c();
+  });
 
   it('Works with no arguments', function () {
     expect(example.a).toEqual(7)
@@ -55,10 +54,6 @@ describe('Simple ClassyClass', function () {
 })
 
 describe('Classy$Module', function () {
-  it('is defined', function () {
-    expect(Classy$Module).toBeDefined()
-  })
-
   var Classy$Class$TestModule, Classy$TestModule;
 
   beforeAll(function () {
@@ -113,5 +108,35 @@ describe('Classy#extend', function () {
     expect(doug.name).toEqual('Doug')
     expect(doug.type).toEqual('Dog')
     expect(doug.sayHello()).toEqual('Hello, my name is Doug and I am a Dog!')
+  })
+})
+
+describe('Classy$Class$IsInstance', function () {
+  var customClassy, Animal
+
+  beforeAll(function () {
+    customClassy = Module$IsInstance.module(Classy);
+    Animal = customClassy(1, function (self, type) {
+      self.type = type;
+    })
+  })
+
+  it('returns true for all matching objects', function () {
+    expect(Animal.isInstance(Animal('dog'))).toEqual(true);
+    expect(Animal.isInstance({ type: 'dog' })).toEqual(true);
+    expect(Animal.isInstance({ type: 'dog', name: 'Fido' })).toEqual(true);
+    var dog = Object.create(null);
+    dog.type = 'dog';
+    expect(Animal.isInstance(dog)).toEqual(true);
+    dog.name = 'Fido';
+    expect(Animal.isInstance(dog)).toEqual(true);
+  })
+
+  it('returns false for inexact matches when used with strict=true', function () {
+    expect(Animal.isInstance({ type: 'dog' }, true)).toEqual(false);
+    var dog = Object.create(null);
+    dog.type = 'dog';
+    dog.name = 'Doug';
+    expect(Animal.isInstance(dog, true)).toEqual(false);
   })
 })
