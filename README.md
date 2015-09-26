@@ -7,6 +7,7 @@ Author: [Jordan Timmerman (@skorlir)](https://github.com/skorlir)
 
 Built at the [Northwestern University WCAS Multimedia Learning Center](https://github.com/mmlc)
 
+[![Build Status](https://travis-ci.org/mmlc/Classy.svg?branch=master)](https://travis-ci.org/mmlc/Classy)
 
 ## Features
 
