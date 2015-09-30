@@ -110,8 +110,7 @@ By using extensions, Classy doesn't make any assumptions about what you do or do
   or as complex as you want!
 
 **Publishing extensions to NPM**: If you want to publish a Classy Extension to NPM,
-  make sure to add the keywords `classy` and `extension` to your package.json before
-  publishing.
+  make sure to add the keyword `classy-extension` to your package.json before publishing.
 
 ## Usage
 
@@ -119,7 +118,7 @@ Using Classy looks like this:
 
 ```js
 Classy([nArgs], function selfFunction (self, [constructorArgs]) {
-  ... (class body) ...
+  // class body ...
 })
 ```
 

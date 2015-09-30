@@ -1,6 +1,6 @@
 {
   "name": "classy-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A demure class constructor constructor. Extensible, simple, bare.",
   "main": "src/index.js",
   "scripts": {
