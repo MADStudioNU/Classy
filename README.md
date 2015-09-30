@@ -1,6 +1,6 @@
 # Classy
 ### The demure class constructor constructor
-#### (Yes, [class constructor constructor](blog.fluffywaffles.io/classy).)
+#### (Yes, [class constructor constructor](http://blog.fluffywaffles.io/classy).)
 #### It's also often [faster than function](http://jsperf.com/classy-vs-function-real-world-init-only/3#results).
 
 Author: [Jordan Timmerman (@skorlir)](https://github.com/skorlir)
