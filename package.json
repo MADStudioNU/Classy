@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "A demure class constructor constructor. Extensible, simple, bare.",
   "main": "src/index.js",
+  "repository": "http://github.com/mmlc/classy",
   "scripts": {
     "test": "gulp test"
   },
