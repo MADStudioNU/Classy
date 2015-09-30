@@ -1,6 +1,6 @@
 {
   "name": "classy-js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A demure class constructor constructor. Extensible, simple, bare.",
   "main": "src/index.js",
   "repository": "http://github.com/mmlc/classy",
