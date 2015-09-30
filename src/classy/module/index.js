@@ -6,6 +6,7 @@ var Classy$ModuleForType = function (type) {
       if (type == 'core') moduleFn(moduleClassy);
 
       else if (type == 'class') {
+        // FIXME(jordan): you lose all existing core modules here....
         moduleClassy = function Classy$WithModules (nArgs, constructor) {
           var ClassyImpl$Class = Classy(nArgs, constructor);
           moduleFn(ClassyImpl$Class);

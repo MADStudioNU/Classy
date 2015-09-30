@@ -1,5 +1,6 @@
 var Classy$Module = require('classy/module')
   , Classy$Class$GeneratesModel = require('./generates-model.js').moduleDef
+  , NoDefault = require('./generates-model.js').NoDefault
 
 function Classy$Class$IsInstance (classyClass) {
   // Make sure we get a model for instance checking
@@ -11,9 +12,9 @@ function Classy$Class$IsInstance (classyClass) {
         values = classyClass.values,
         len = fields.length,
         strict = strict || false
-    for (i = 0; i < len, field = fields[i], value = values[++i];) {
+    for (i = 0; i < len, field = fields[i], value = values[i++];) {
       var objectValue = object[field];
-      if (!objectValue || (value != undefined && objectValue != value)) {
+      if (!(value === NoDefault && objectValue) && objectValue != value) {
         return false;
       }
     }

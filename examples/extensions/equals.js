@@ -2,9 +2,9 @@
  * Usage
  * ********************
  *
- * var Classy$Equalable = Classy.mixin(Equals);
+ * var Classy$Equalable = Classy.extend(Equals);
  *
- * var Animal = Classy$Equalable.mixin(function (self) {
+ * var Animal = Classy$Equalable.extend(function (self) {
  *   self.sayHello = function () {
  *     return "Hello, my name is " + self.name + " and I am a " + self.type + "!";
  *   }

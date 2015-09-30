@@ -15,5 +15,6 @@ var Classy$Base = require('classy/base')
 Classy = Classy$Extensible(Classy$Base);
 Classy$Module = require('classy/module');
 Module$IsInstance = require('classy/modules/class/is-instance.js');
+ClassyToString = require('examples/extensions/toString.js');
 
 module.exports = Classy;

@@ -2,7 +2,7 @@
  * Usage
  * ********************
  *
- * var Classy$WithToString = Classy.mixin(ToString);
+ * var Classy$WithToString = Classy.extend(ToString);
  *
  * var Animal = Classy$WithToString(2, function (self, type, name) {
  *   self.type = type;
