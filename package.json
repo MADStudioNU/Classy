@@ -1,12 +1,12 @@
 {
   "name": "classy-js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A demure class constructor constructor. Extensible, simple, bare.",
   "main": "src/index.js",
   "repository": "http://github.com/mmlc/classy",
   "scripts": {
     "test": "gulp test",
-    "postinstall" : "node -e \"var c='../src/classy',d='node_modules/classy',fs=require('fs');fs.exists(d,function(d){d||fs.symlinkSync(c,d,'dir')});var s='../src/selfish',d='node_modules/selfish';fs.exists(d,function(d){d||fs.symlinkSync(s,d,'dir')});\""
+    "postinstall": "node -e \"var c='../src/classy',d='node_modules/classy',fs=require('fs');fs.exists(d,function(e){e||fs.symlinkSync(c,d,'dir')});var s='../src/selfish',d='node_modules/selfish';fs.exists(d,function(e){e||fs.symlinkSync(s,d,'dir')});\""
   },
   "keywords": [
     "classy",
