@@ -20,7 +20,7 @@
  * // => { a: 'hello', b: function () { return 17; }, keys: function () {...} }
  *
  * aMixedClass.keys()
- * // => [ 'a', 'b', 'fieldNames' ]
+ * // => [ 'a', 'b', 'keys' ]
  *
  */
 
