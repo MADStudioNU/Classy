@@ -1,12 +1,12 @@
-describe('Classy$Module', function () {
+describe('Classy.Module', function () {
   var Classy$Class$TestModule, Classy$TestModule;
 
   beforeAll(function () {
-    Classy$Class$TestModule = Classy$Module.$Class(function (classyClass) {
+    Classy$Class$TestModule = Classy.Module.$Class(function (classyClass) {
       classyClass.test = function () { return true; }
     })
 
-    Classy$TestModule = Classy$Module.$Core(function (classy) {
+    Classy$TestModule = Classy.Module.$Core(function (classy) {
       classy.test = function () { return true; }
     })
   })

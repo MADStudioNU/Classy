@@ -1,4 +1,3 @@
-
 var extendMethods = function (to, from) {
   for (var method in from) {
     if ((from[method] instanceof Function) && to[method] == undefined) {
