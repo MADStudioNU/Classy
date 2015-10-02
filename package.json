@@ -1,12 +1,12 @@
 {
   "name": "classy-js",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "description": "A demure class constructor constructor. Extensible, simple, bare.",
   "main": "src/index.js",
   "repository": "http://github.com/mmlc/classy",
   "scripts": {
     "test": "gulp test",
-    "postInstall": "node create-symlinks.js"
+    "postinstall": "node create-symlinks.js"
   },
   "keywords": [
     "classy",

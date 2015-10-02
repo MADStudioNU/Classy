@@ -6,6 +6,12 @@ var c  = '../src/classy'
   , sd = 'node_modules/selfish'
   , e  = undefined
 
+e = fs.existsSync('node_modules')
+if (!e) {
+  console.log('create dummy node_modules')
+  fs.mkdirSync('node_modules')
+}
+
 e = fs.existsSync(cd);
 if (!e) {
   console.log('link', cd, 'to', c)
