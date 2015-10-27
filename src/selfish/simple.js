@@ -1,8 +1,8 @@
-var Selfish$Simple = function (constructor) {
+var Selfish$Simple = function (constructor, base) {
   return (function (self) {
     constructor(self);
     return self;
-  })(Object.create(null))
+  })(base || Object.create(null))
 }
 
 module.exports = Selfish$Simple;

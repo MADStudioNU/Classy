@@ -1,32 +1,34 @@
-var Selfish$Variadic$1 = function (constructor, a) {
+// NOTE(jordan): optimized argument counts
+// this is a place where macros would be useful
+var Selfish$Variadic$1 = function (constructor, a, base) {
   return (function (self) {
     constructor(self, a);
     return self;
-  })(Object.create(null))
+  })(base || Object.create(null))
 }
 
-var Selfish$Variadic$2 = function (constructor, a, b) {
+var Selfish$Variadic$2 = function (constructor, a, b, base) {
   return (function (self) {
     constructor(self, a, b);
     return self;
-  })(Object.create(null))
+  })(base || Object.create(null))
 }
 
-var Selfish$Variadic$3 = function (constructor, a, b, c) {
+var Selfish$Variadic$3 = function (constructor, a, b, c, base) {
   return (function (self) {
     constructor(self, a, b, c);
     return self;
-  })(Object.create(null))
+  })(base || Object.create(null))
 }
 
-var Selfish$Variadic = function () {
-  var args        = arguments
-    , constructor = args[0]
+// NOTE(jordan): performance may be better now with Array args?
+var Selfish$Variadic = function (args, base) {
+  var constructor = args[0]
   return (function (self) {
     args[0] = self;
     constructor.apply(this, args);
     return self;
-  })(Object.create(null))
+  })(base || Object.create(null))
 }
 
 module.exports = {
