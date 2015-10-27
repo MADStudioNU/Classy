@@ -16,7 +16,7 @@ var classValues = function (classyClass, classFields) {
   var classValues = [];
   classFields.forEach(function (f) {
     var v = classyClass[f];
-    classValues.push(v ? v : NoDefault)
+    classValues.push(v !== undefined ? v : NoDefault)
   })
   return classValues;
 }
