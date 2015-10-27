@@ -1,5 +1,5 @@
-var Selfish$Simple   = require('selfish/simple.js')
-  , Selfish$Variadic = require('selfish/variadic.js')
+var Selfish$Simple   = require('../../selfish/simple')
+  , Selfish$Variadic = require('../../selfish/variadic')
 
 // Optimize common #s of args, avoid using apply
 var Classy$Class$Constructor = function Classy$Class$SwitchCaseConstructor (nArgs, constructor) {

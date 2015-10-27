@@ -1,4 +1,4 @@
-var Classy$Module = require('classy/module')
+var Classy$Module = require('../module')
 
 function NoDefault () {
   return NoDefault;

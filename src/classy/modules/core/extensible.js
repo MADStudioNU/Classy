@@ -1,4 +1,4 @@
-var Classy$Module = require('classy/module');
+var Classy$Module = require('../module');
 
 var ClassyExtend = function (ClassyImpl) {
   ClassyImpl.extend = function Classy$Extensible$Extend (extension) {

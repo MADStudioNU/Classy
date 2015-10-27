@@ -9,15 +9,8 @@
  * \\\\ \
  * \\\\\\\\\\\*/
 
-var Classy$Base = require('classy/base')
-  , Classy$Extensible = require('classy/modules/core/extensible.js').module
+var Classy$Base = require('./classy/base')
 
-Classy = Classy$Extensible(Classy$Base);
-Classy.Base   = Classy$Base;
-Classy.Module = require('classy/module');
-
-// NOTE(jordan): browserify tests to fix this
-Module$IsInstance = require('classy/modules/class/is-instance.js');
-ClassyToString = require('../examples/extensions/toString.js');
+Classy = Classy$Base;
 
 module.exports = Classy;

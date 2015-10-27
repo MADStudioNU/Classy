@@ -1,4 +1,4 @@
-var Classy$Module = require('classy/module')
+var Classy$Module = require('../module')
   , Classy$Class$GeneratesModel = require('./generates-model.js').moduleDef
   , NoDefault = require('./generates-model.js').NoDefault
 

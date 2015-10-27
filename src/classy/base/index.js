@@ -1,4 +1,4 @@
-var Classy$Class = require('classy/class')
+var Classy$Class = require('../class')
 
 var Classy$Base = function Classy (nArgs, constructor) {
   if (!constructor)
