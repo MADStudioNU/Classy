@@ -6,6 +6,24 @@ var gulp       = require('gulp')
   , watchify   = require('watchify')
   , karma      = require('karma')
 
+function bundle (b, name, dest) {
+  return b.bundle()
+    .pipe(source(name))
+    .pipe(buffer())
+    .pipe(gulp.dest(dest))
+}
+
+gulp.task('bundle:selfish', function () {
+
+  var b = browserify({
+    entries: 'src/selfish'
+  })
+
+  b.on('log', gutil.log)
+
+  return bundle(b, 'selfish.bundle.js', 'dist')
+})
+
 gulp.task('bundle', [], function () {
 
   var b = browserify({
@@ -15,10 +33,18 @@ gulp.task('bundle', [], function () {
 
   b.on('log', gutil.log)
 
-  return b.bundle()
-    .pipe(source('classy.bundle.js'))
-    .pipe(buffer())
-    .pipe(gulp.dest('dist/'))
+  return bundle(b, 'classy.bundle.js', 'dist')
+})
+
+gulp.task('bundle:refactor', function () {
+
+  var b = browserify({
+    entries: 'src/refactor'
+  })
+
+  b.on('log', gutil.log)
+
+  return bundle(b, 'classy.refactor.bundle.js', 'dist')
 })
 
 gulp.task('bundle:watch', [], function () {
@@ -29,10 +55,7 @@ gulp.task('bundle:watch', [], function () {
   })
 
   function bundle() {
-    return b.bundle()
-      .pipe(source('classy.bundle.js'))
-      .pipe(buffer())
-      .pipe(gulp.dest('dist/'))
+    return bundle(b, 'classy.bundle.js', 'dist')
   }
 
   b = watchify(b);
