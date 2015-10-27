@@ -2,7 +2,7 @@ var Selfish$Simple   = require('../../selfish/simple')
   , Selfish$Variadic = require('../../selfish/variadic')
 
 // Optimize common #s of args, avoid using apply
-var Classy$Class$Constructor = function Classy$Class$SwitchCaseConstructor (nArgs, constructor) {
+var Classy$Class$Constructor = function (nArgs, constructor) {
   switch(nArgs) {
     case 0:
       return function Classy$Class () {
