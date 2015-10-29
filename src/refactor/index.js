@@ -1,27 +1,40 @@
 var Selfish             = require('../selfish')
   , modules             = require('./modules')
-  , ClassyClassOrMedium = require('./class')
+  , ClassyClass         = require('./class').Class
+  , ClassyClassMedium   = require('./class').Medium
 
-var mods = Object.create(null)
+function ClassyFactory (mods) {
 
-function ClassyFactory () {
-
-  return ClassyClassOrMedium
+  return function (constructor) {
+    if (!constructor)
+      return ClassyClassMedium(mods)
+    else
+      return ClassyClass(constructor)
+  }
 
 }
 
-function classyDef (classy) {
-  classy.mod = function (classyModules) {
+function classyDef (mods) {
+  return function (classy) {
+    classy.mod = function (type, mod) {
+      var newMods = { core: [].slice(mods.core), base: undefined }
 
-    if (!(classyModules instanceof Array))
-      classyModules = [ classyModules ]
+      if (type == 'core')
+        newMods.core.push(mod)
+      if (type == 'base')
+        newMods.base = mod
 
-    var newClassy = Selfish.simple(classyDef, ClassyFactory())
-    modules.call(newClassy, classyModules)
-    return newClassy
+      return ClassyMod(newMods)
+    }
   }
 }
 
-Classy = Selfish.simple(classyDef, ClassyFactory())
+function ClassyMod (mods) {
+  return Selfish.simple(classyDef(mods), ClassyFactory(mods))
+}
+
+var baseMods = { core: [], base: undefined }
+
+Classy = ClassyMod(baseMods)
 
 module.exports = Classy

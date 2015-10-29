@@ -36,7 +36,7 @@ eff.compose = function () {
 
 // NOTE(jordan): chain as ordered array
 // ONLY APPLY certain fns (usecase: modules.compose)
-// EFFICIENCY: n-1 `apply`s, n fn calls
+// EFFICIENCY: 1 `apply`, n fn calls
 eff.composeApplyLast = function (fns) {
   var lastFn = fns.length - 1
 

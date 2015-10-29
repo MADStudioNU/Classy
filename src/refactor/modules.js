@@ -3,12 +3,8 @@ var Selfish = require('../selfish')
 
 module.exports = Selfish.simple(function (modules) {
 
-  modules.call = function (target, modules) {
-    if (modules.length) {
-      eff.callEach(modules, target)
-    } else {
-      target(modules)
-    }
+  modules.apply = function (target, modules) {
+    eff.callEach(modules, target)
   }
 
   modules.compose = eff.composeApplyLast
