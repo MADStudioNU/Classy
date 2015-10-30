@@ -1,7 +1,7 @@
 # Classy
 ### The demure class constructor constructor
 #### (Yes, [class constructor constructor](http://blog.fluffywaffles.io/classy).)
-#### It's also often faster than function, because it uses Object.create instead of `new`
+#### It's also often faster than function
 
 Author: [Jordan Timmerman (@skorlir)](https://github.com/skorlir)
 
@@ -13,57 +13,125 @@ Built at the [Northwestern University WCAS Multimedia Learning Center](https://g
 
 With good manners, and the right utensils, you can do anything.
 
-Put another way, with a small set of powerful functions for composing simple data structures,
-you can build anything - you don't need Classes or Prototypes.
+Put another way: you don't need prototypes. You don't need Classes. You don't need `super`
+or `interface`. With a small set of powerful functions for composing simple data structures,
+you can build anything.
 
-In fact, Classy eschews Prototypes and classical inheritance patterns and just about everything.
-And it can do everything you need. Plus, it's fast, clean, and super composeable, with a
-clear and very concise API the likes of which you just don't see in a prototypal world.
+That's Classy. The no-system class system. It's just composition.
 
 ## Features
 
 Classy is a composeable class constructor constructor. Anyplace you might imagine yourself
 using function and prototypes, you can use Classy Classes instead.
 
-**Here are some of the features of Classy:**
-  * Substitutes `self` for `this` - and `self` is *always* your instance, even in callbacks
-  * Enforces composition over OOP inheritance
-  * Multiple inheritance (not Classical Inheritance)
-  * Provides a simple syntax (see [Usage](#show-me-some-code) for more examples):
-```js
-  var aClass = Classy(function (self) {
-      self.field = 'value';
-      self.method = function () {};
-  })
-```
-  * [Completely Bare](#overview-of-classy)
+Classy:
 
-## Explanation
-### Overview of Classy
+  * Very few assumptions about how you will use it
+    * Class Instances don't have any default methods or fields
+    * Neither do Classes
+  * `self` instead of `this` (powered by [Selfish](https://github.com/mmlc/selfish))
+  * [Completely Bare by default](#bare-by-default)
+  * Entirely compositional
+  * Multiple inheritance (via composition)
+  * Simple syntax (see [Usage](#usage) for more examples):
 
-All the features of Classy are opt-in only.
+  ```js
+    var aClass = Classy(function (self) {
+        self.field = 'value'
+        self.method = function () {}
+    })
+  ```
 
-If you want a detailed explanation of the design, check out [design.md](./DESIGN.md).
-
-Basically, Classy gives you no more than the absolute minimum: a totally bare object.
-Then you add in the things you want.
-
-You'll never have anything you don't want or need, and Object.hasOwnProperty
-is totally unnecessary: you'll never have a method from somewhere else pollute your Instance.
-
+## Usage
 ### Show me some code
 
 Classy classes are completely empty by default:
 
 ```js
-var EmptyClass = Classy(function () {});
+var EmptyClass = Classy(function () {})
 
 EmptyClass()
 ```
 
-will return an Object (`{}`) that has absolutely no fields or methods.
+will return an Object (`{}`) that has absolutely no fields or methods, and
+no prototype.
 
-### More code!
+### Adding Features
+
+Composition is first-class in Classy, and it's how every class and instance
+feature is defined and included.
+
+Additionally, you can change (slightly) the ways that features are defined
+and included by using Classy mods. These create a whole new Classy.
+
+Check it out:
+
+```js
+// We're going to use the Compose mod
+var Compose = require('classy-mod-compose')
+
+// And a couple of Class/Instance features
+var IsInstance = require('classy-is-instance')
+  , ToString = require('classy-to-string')
+
+// Supposing you want to inherit from/compose with other Classy Classes,
+// you can import Classy with a Compose mod that lets you do that.
+var Classy = require('classy-js').mod(Compose)
+
+var Animal = Classy() // To add class-level methods, defer specifying
+  .use(IsInstance)    // a constructor until later, with `define`.
+  .define(function (animal, type) {
+    animal.type = type
+  })
+
+var Dog = Classy()
+  .use([ ToString, IsInstance ]) // again, let's add some class-level features
+  .compose(Animal, 'Dog')        // now compose with Animal, with 'Dog' for type
+  .define(function (dog, name) {
+    dog.name = name
+  })
+
+// now we can mix in Instance fields/methods
+// keep in mind: `use` and `compose` et. al are ALWAYS immutable (return new objects)
+function Bark (dog) {
+  dog.bark = function () {
+    return dog.name + ' is barking! Woof! Woof!'
+  }
+}
+
+function WagTail (dog) {
+  dog.wagTail = function () {
+    return dog.name + ' is wagging his tail!'
+  }
+}
+
+// Notice you can use the exact same ToString function. Composition!
+Dog = Dog.use([ Bark, WagTail, ToString ])
+
+// Class-level features are on the Class object, not on the instance
+Dog.toString()
+// => Dog { toString: fn, isInstance: fn, constructor: function (dog...) {...} }
+
+var fido = Dog('Fido')
+// => { name: 'Fido', type: 'Dog', bark: fn, wagTail: fn, toString: fn }
+
+fido.bark()     // => 'Fido is barking! Woof! Woof!'
+fido.wagTail()  // => 'Fido is wagging his tail!'
+fido.type       // => 'Dog'
+fido.toString()
+// => { name: 'Fido', type: 'Dog', bark: fn, wagTail: fn, toString: fn }
+
+// And we can check instances, too:
+Animal.isInstance(fido) // true
+Dog.isInstance(fido)    // true
+Dog.isInstance(extend({}, fido, { type: 'Cat' }))    // false
+Animal.isInstance(extend({}, fido, { type: 'Cat' })) // true
+
+```
+
+### What exactly do you mean by Bare by Default?
+
+Here's an explicit, albeit slightly contrived, example:
 
 ```js
 var Truth = Classy(function (self) {
@@ -88,61 +156,4 @@ for (var fact in theTruth) {
  if (theTruth[junk]) return junk;
 })
 // => []
-```
-
-### YOu sAid ther would be CODE
-
-Composition is a first-class feature in Classy. Check it out:
-```js
-
-// supposing you want to inherit from/compose with other Classy Classes,
-// you can import Classy with a Compose mod
-var Classy = require('classy-js').mod(Compose)
-
-var Animal = Classy() // to add class-level methods, defer specifying
-  .use(IsInstance)    // a constructor until later, with `define`
-  .define(function (animal, type) {
-    animal.type = type
-  })
-
-var Dog = Classy()
-  .use([ ToString, IsInstance ]) // like above, let's add some class-level features
-  .compose(Animal, 'Dog')        // compose with Animal, passing in Dog for type
-  .define(function (dog, name) {
-    dog.name = name
-  })
-
-// now we can mix in Instance fields/methods
-// keep in mind: `use` and `compose` et. al are ALWAYS immutable (return new objects)
-function Bark (dog) {
-  dog.bark = function () {
-    return dog.name + ' is barking! Woof! Woof!'
-  }
-}
-
-function WagTail (dog) {
-  dog.wagTail = function () {
-    return dog.name + ' is wagging his tail!'
-  }
-}
-
-// Notice you can use the exact same ToString function. Composition!
-Dog = Dog.use([ Bark, WagTail, ToString ])
-
-// Class-level features are on the Class object, not on the instance
-Dog.toString() // Dog { toString: fn, isInstance: fn, constructor: function (dog, name) {...} }
-
-var fido = Dog('Fido')
-
-fido.bark()     // 'Fido is barking! Woof! Woof!'
-fido.wagTail()  // 'Fido is wagging his tail!'
-fido.type       // 'Dog'
-fido.toString() // { name: 'Fido', type: 'Dog', bark: fn, wagTail: fn }
-
-// And we can do this, too
-Animal.isInstance(fido) // true
-Dog.isInstance(fido)    // true
-Dog.isInstance(extend({}, fido, { type: 'Cat' }))    // false
-Animal.isInstance(extend({}, fido, { type: 'Cat' })) // true
-
 ```
