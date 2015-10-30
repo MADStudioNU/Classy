@@ -31,7 +31,7 @@ function ClassMedium (mods, classModules) {
     }
   }
 
-  return Selfish.simple(Medium(mods.core), mods.base)
+  return Selfish.simple(Medium(mods))
 }
 
 module.exports = ClassMedium

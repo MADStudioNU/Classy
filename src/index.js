@@ -17,12 +17,9 @@ function ClassyFactory (mods) {
 function classyDef (mods) {
   return function (classy) {
     classy.mod = function (type, mod) {
-      var newMods = { core: [].slice(mods.core), base: undefined }
+      var newMods = [].slice.call(mods)
 
-      if (type == 'core')
-        newMods.core.push(mod)
-      if (type == 'base')
-        newMods.base = mod
+      newMods.push(mod)
 
       return ClassyMod(newMods)
     }
@@ -33,8 +30,6 @@ function ClassyMod (mods) {
   return Selfish.simple(classyDef(mods), ClassyFactory(mods))
 }
 
-var baseMods = { core: [], base: undefined }
+var baseMods = []
 
-Classy = ClassyMod(baseMods)
-
-module.exports = Classy
+module.exports = Classy = ClassyMod(baseMods)
