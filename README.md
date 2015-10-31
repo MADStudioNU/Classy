@@ -37,8 +37,13 @@ Classy:
 
   ```js
     var aClass = Classy(function (self) {
+<<<<<<< HEAD
         self.field = 'value';
         self.method = function () {};
+=======
+        self.field = 'value'
+        self.method = function () {}
+>>>>>>> 8ef5b682e18c219bc63cd06ca702e8ddf9a0cb0c
     })
   ```
 
@@ -48,7 +53,7 @@ Classy:
 Classy classes are completely empty by default:
 
 ```js
-var EmptyClass = Classy(function () {});
+var EmptyClass = Classy(function () {})
 
 EmptyClass()
 ```
@@ -57,12 +62,32 @@ will return an Object (`{}`) that has absolutely no fields or methods, and
 no prototype.
 
 ### Adding Features
+<<<<<<< HEAD
 
 Composition is first-class in Classy, and it's how every class and instance feature
 is defined and in. Something similar is the case for Check it out:
+=======
+
+Composition is first-class in Classy, and it's how every class and instance
+feature is defined and included.
+
+Additionally, you can change (slightly) the ways that features are defined
+and included by using Classy mods. These create a whole new Classy.
+
+Check it out:
+>>>>>>> 8ef5b682e18c219bc63cd06ca702e8ddf9a0cb0c
 
 ```js
+// We're going to use the Compose mod
+var Compose = require('classy-mod-compose')
 
+<<<<<<< HEAD
+=======
+// And a couple of Class/Instance features
+var IsInstance = require('classy-is-instance')
+  , ToString = require('classy-to-string')
+
+>>>>>>> 8ef5b682e18c219bc63cd06ca702e8ddf9a0cb0c
 // Supposing you want to inherit from/compose with other Classy Classes,
 // you can import Classy with a Compose mod that lets you do that.
 var Classy = require('classy-js').mod(Compose)
@@ -74,8 +99,8 @@ var Animal = Classy() // To add class-level methods, defer specifying
   })
 
 var Dog = Classy()
-  .use([ ToString, IsInstance ]) // like above, let's add some class-level features
-  .compose(Animal, 'Dog')        // compose with Animal, passing in Dog for type
+  .use([ ToString, IsInstance ]) // again, let's add some class-level features
+  .compose(Animal, 'Dog')        // now compose with Animal, with 'Dog' for type
   .define(function (dog, name) {
     dog.name = name
   })
@@ -98,9 +123,11 @@ function WagTail (dog) {
 Dog = Dog.use([ Bark, WagTail, ToString ])
 
 // Class-level features are on the Class object, not on the instance
-Dog.toString() // Dog { toString: fn, isInstance: fn, constructor: function (dog, name) {...} }
+Dog.toString()
+// => Dog { toString: fn, isInstance: fn, constructor: function (dog...) {...} }
 
 var fido = Dog('Fido')
+// => { name: 'Fido', type: 'Dog', bark: fn, wagTail: fn, toString: fn }
 
 fido.bark()     // => 'Fido is barking! Woof! Woof!'
 fido.wagTail()  // => 'Fido is wagging his tail!'
@@ -116,9 +143,15 @@ Animal.isInstance(extend({}, fido, { type: 'Cat' })) // true
 
 ```
 
+<<<<<<< HEAD
 ### Bare by Default?
 
 Yes. And by example:
+=======
+### What exactly do you mean by Bare by Default?
+
+Here's an explicit, albeit slightly contrived, example:
+>>>>>>> 8ef5b682e18c219bc63cd06ca702e8ddf9a0cb0c
 
 ```js
 var Truth = Classy(function (self) {
@@ -144,4 +177,7 @@ for (var fact in theTruth) {
 })
 // => []
 ```
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8ef5b682e18c219bc63cd06ca702e8ddf9a0cb0c
