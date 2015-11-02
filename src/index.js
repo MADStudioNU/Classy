@@ -1,35 +1,26 @@
-var Selfish             = require('../selfish')
-  , modules             = require('./modules')
-  , ClassyClass         = require('./class').Class
-  , ClassyClassMedium   = require('./class').Medium
+var Selfish     = require('selfish-js')
+  , Thunk       = require('kathunk')
+  , Class       = require('./class')
+  , ClassMedium = require('./class-medium')
+  , Moddable    = require('./moddable')
 
-function ClassyFactory (mods) {
-
-  return function (constructor) {
+var ClassyBase = Thunk (
+  function (constructor) {
     if (!constructor)
-      return ClassyClassMedium(mods)
+      return ClassMedium()
     else
-      return ClassyClass(constructor)
+      return Class(constructor)
   }
+)
 
-}
+var Classy = function (classy) {
+  classy.mod = function (mod) {
+    var newMods = [].slice.call(classy.mods)
 
-function classyDef (mods) {
-  return function (classy) {
-    classy.mod = function (type, mod) {
-      var newMods = [].slice.call(mods)
+    Moddable.append(newMods, mod)
 
-      newMods.push(mod)
-
-      return ClassyMod(newMods)
-    }
+    return Moddable(Classy, ClassyBase, newMods)
   }
 }
 
-function ClassyMod (mods) {
-  return Selfish.simple(classyDef(mods), ClassyFactory(mods))
-}
-
-var baseMods = []
-
-module.exports = Classy = ClassyMod(baseMods)
+module.exports = Moddable(Classy, ClassyBase)

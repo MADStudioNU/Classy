@@ -1,37 +1,20 @@
-var Selfish     = require('../selfish')
-  , modules     = require('./modules')
+var Selfish     = require('selfish-js')
+  , Thunk       = require('kathunk')
   , ClassyClass = require('./class')
+  , Moddable    = require('./moddable')
 
-function ClassMedium (mods, classModules) {
+function Medium (medium) {
+  medium.use = function (classModules) {
+    var newClassModules = [ ].slice.call(medium.mods)
 
-  function Medium (coreMods) {
-    return function (medium) {
+    Moddable.append(newClassModules, classModules)
 
-      if (coreMods.length)
-        modules.apply(medium, coreMods)
-
-      medium.use = function (classModule) {
-        classModules = (classModules && classModules.length) ? classModules : [ ]
-
-        var newModules
-
-        if (classModule.length) {
-          newModules = classModules.concat(classModule)
-        } else {
-          newModules = [].slice.call(classModules)
-          newModules.push(classModule)
-        }
-
-        return ClassMedium(mods, newModules)
-      }
-
-      medium.define = function (constructor) {
-        return ClassyClass(constructor, classModules)
-      }
-    }
+    return Moddable(Medium, Thunk, newClassModules)
   }
 
-  return Selfish.simple(Medium(mods))
+  medium.define = function (constructor) {
+    return ClassyClass(constructor, medium.mods)
+  }
 }
 
-module.exports = ClassMedium
+module.exports = Thunk ( Moddable(Medium) )

@@ -12,11 +12,9 @@ eff.composeApplyLast = function (fns) {
   var lastFn = fns.length - 1
 
   return function (self) {
-    var args = arguments
-
     ([]).forEach.call(fns, function (fn, i) {
       if (i == lastFn)
-        fn.apply(null, args)
+        fn.apply(null, arguments)
       else
         fn(self)
     })
@@ -32,5 +30,15 @@ eff.callEach = function (fns, target) {
     }
   }
 
-  fns.forEach(callOn(target))
+  if (fns instanceof Array)
+    fns.forEach(callOn(target))
+}
+
+// NOTE(jordan): add 1 or more els to an array
+// EFFICIENCY: O(n) if more than 1 els
+eff.pushEach = function (arr, els) {
+  if (els instanceof Array)
+    els.forEach(arr.push.bind(arr))
+  else
+    arr.push(els)
 }

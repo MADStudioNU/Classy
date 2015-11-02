@@ -1,3 +1,7 @@
 
+~~* Refactor to new API~~
+~~* Refactor eff~~
+~~* Factor out anything that doesn't fit~~
+~~* Simply as much as possible~~
 * Update/fix tests
-* Potentially factor out 'eff', it's kinda weird. At the very least cut out any methods that aren't actually being used.
+* There really has to be a better way to write class.js

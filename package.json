@@ -36,6 +36,7 @@
     "watchify": "^3.4.0"
   },
   "dependencies": {
+    "kathunk": "^1.0.0",
     "selfish-js": "^1.0.0"
   }
 }
