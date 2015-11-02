@@ -23,7 +23,7 @@ eff.composeApplyLast = function (fns) {
   }
 }
 
-// NOTE(jordan): call a bunch of fns oon target
+// NOTE(jordan): call a bunch of fns on target
 // EFFICIENCY: n+1 fn calls (1 from callOn)
 eff.callEach = function (fns, target) {
   function callOn (target) {
