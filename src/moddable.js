@@ -15,8 +15,8 @@ function Moddable (definition, base, mods) {
   return moddable
 }
 
-Moddable.append   = eff.pushEach
-Moddable.apply    = eff.callEach
-Moddable.compose  = eff.composeApplyLast
+Moddable.append  = eff.pushEach
+Moddable.apply   = eff.callEach
+Moddable.compose = eff.composeApplyLast
 
-module.exports    = Moddable
+module.exports   = Moddable

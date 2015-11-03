@@ -1,70 +1,37 @@
 var gulp       = require('gulp')
-  , gutil      = require('gulp-util')
-  , source     = require('vinyl-source-stream')
-  , buffer     = require('vinyl-buffer')
-  , browserify = require('browserify')
-  , watchify   = require('watchify')
+  , bifywify   = require('bify-wify-fwify')
   , karma      = require('karma')
+  , Thunk      = require('kathunk')
 
-function bundle (b, name, dest) {
-  return b.bundle()
-    .pipe(source(name))
-    .pipe(buffer())
-    .pipe(gulp.dest(dest))
+function Do () {
+  var args = [].slice.call(arguments, 1)
+    , action = arguments[0]
+  return function () {
+    action.apply(null, args)
+  }
 }
 
-gulp.task('bundle:selfish', function () {
+gulp.task('bundle:standalone', Do (
+  bifywify.fbify, 'src', 'classy.bundle.js', { standalone: 'Classy' }
+))
 
-  var b = browserify({
-    entries: 'src/selfish'
-  })
+gulp.task('bundle:src', Do (
+  bifywify.fbify, 'src', 'classy.bundle.js'
+))
 
-  b.on('log', gutil.log)
+gulp.task('bundle:src:watch', Do (
+  bifywify.fwify, 'src', 'classy.bundle.js'
+))
 
-  return bundle(b, 'selfish.bundle.js', 'dist')
-})
+gulp.task('bundle:test', Do (
+  bifywify.fbify, 'tests', 'classy.spec.js'
+))
 
-gulp.task('bundle', [], function () {
+gulp.task('bundle:test:watch', Do (
+  bifywify.fwify, 'tests', 'classy.spec.js'
+))
 
-  var b = browserify({
-    entries: 'src',
-    paths: [ 'src', '.' ]
-  })
-
-  b.on('log', gutil.log)
-
-  return bundle(b, 'classy.bundle.js', 'dist')
-})
-
-gulp.task('bundle:refactor', function () {
-
-  var b = browserify({
-    entries: 'src/refactor'
-  })
-
-  b.on('log', gutil.log)
-
-  return bundle(b, 'classy.refactor.bundle.js', 'dist')
-})
-
-gulp.task('bundle:watch', [], function () {
-  var b = browserify({
-    debug: true,
-    entries: 'src',
-    paths: [ 'src', '.' ]
-  })
-
-  function bundle() {
-    return bundle(b, 'classy.bundle.js', 'dist')
-  }
-
-  b = watchify(b);
-
-  b.on('log', gutil.log)
-  b.on('update', bundle);
-
-  bundle();
-})
+gulp.task('bundle', [ 'bundle:src', 'bundle:test' ])
 
 gulp.task('test', [ 'bundle' ], function (done) {
   var server = new karma.Server({
@@ -89,5 +56,3 @@ gulp.task('tdd', [ 'bundle:watch' ], function (done) {
   }, done)
   return server.start();
 })
-
-gulp.task('default', [ 'bundle' ]);
