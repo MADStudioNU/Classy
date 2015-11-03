@@ -30,7 +30,9 @@ Classy:
     * Class Instances don't have any default methods or fields
     * Neither do Classes
   * `self` instead of `this` (powered by [Selfish](https://github.com/mmlc/selfish))
-  * [Completely Bare by default](#bare-by-default)
+    * `self` is always your class instance
+    * No weird stuff like `arr.push.bind(arr)`: there's no "context," only `self`
+  * [Completely Bare by default](#what-exactly-do-you-mean-by-bare-by-default)
   * Entirely compositional
   * Multiple inheritance (via composition)
   * Simple syntax (see [Usage](#usage) for more examples):
