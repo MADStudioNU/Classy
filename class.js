@@ -27,11 +27,12 @@ function ClassyClass (constructor, classModules) {
        * (notice the constructor contains a built-up composition of all
        *  the modules coming before)
        */
+      instModules = instModules instanceof Array ? instModules : [ instModules ]
       instModules.push(constructor)
       /* Then compose the new modules with the constructor and create a
        * new ClassyClass
        */
-      var C = ClassyClass(Moddable.compose(instModules), classModules)
+      var C = ClassyClass(Moddable.compose(instModules), classyClass.constructor, classModules)
       C.instModules = newInstModules
       return C
     }

@@ -6,8 +6,8 @@ var Selfish = require('selfish-js')
 function Moddable (definition, base, mods) {
   var moddable
 
-  base     = base instanceof Function ? base : function () { }
-  mods     = mods instanceof Array ? mods : [ ]
+  base     = (base instanceof Function) ? base : Thunk
+  mods     = (mods instanceof Array)    ? mods : [ ]
 
   moddable = Selfish.simple(definition, base())
   moddable.mods = mods

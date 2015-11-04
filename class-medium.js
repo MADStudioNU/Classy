@@ -3,7 +3,7 @@ var Selfish     = require('selfish-js')
   , ClassyClass = require('./class')
   , Moddable    = require('./moddable')
 
-function Medium (medium) {
+var Medium = function (medium) {
   medium.use = function (classModules) {
     var newClassModules = [ ].slice.call(medium.mods)
 
@@ -17,4 +17,4 @@ function Medium (medium) {
   }
 }
 
-module.exports = Thunk ( Moddable(Medium) )
+module.exports = Thunk(Moddable(Medium))

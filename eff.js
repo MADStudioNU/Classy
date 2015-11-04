@@ -12,9 +12,11 @@ eff.composeApplyLast = function (fns) {
   var lastFn = fns.length - 1
 
   return function (self) {
-    ([]).forEach.call(fns, function (fn, i) {
+    var args = arguments
+
+    fns.forEach(function (fn, i) {
       if (i == lastFn)
-        fn.apply(null, arguments)
+        fn.apply(null, args)
       else
         fn(self)
     })

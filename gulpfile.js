@@ -15,6 +15,10 @@ gulp.task('bundle:standalone', Do (
   bifywify.fbify, 'src', 'classy.bundle.js', { standalone: 'Classy' }
 ))
 
+gulp.task('bundle:standalone:watch', Do (
+  bifywify.fwify, 'src', 'classy.bundle.js', { standalone: 'Classy' }
+))
+
 gulp.task('bundle:src', Do (
   bifywify.fbify, 'src', 'classy.bundle.js'
 ))
