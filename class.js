@@ -32,7 +32,7 @@ function ClassyClass (constructor, classModules) {
       /* Then compose the new modules with the constructor and create a
        * new ClassyClass
        */
-      var C = ClassyClass(Moddable.compose(instModules), classyClass.constructor, classModules)
+      var C = ClassyClass(Moddable.compose(instModules), classModules)
       C.instModules = newInstModules
       return C
     }

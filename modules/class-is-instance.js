@@ -19,7 +19,7 @@ var GenerateModel = function (classyClass) {
   return base
 }
 
-IsInstance = function (classyClass) {
+var IsInstance = function (classyClass) {
   var Model = Memo(GenerateModel, classyClass)
 
   classyClass.isInstance = function (someObject) {
@@ -30,3 +30,5 @@ IsInstance = function (classyClass) {
     })
   }
 }
+
+module.exports = IsInstance
