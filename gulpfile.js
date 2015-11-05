@@ -1,5 +1,5 @@
 var gulp       = require('gulp')
-  , bifywify   = require('bify-wify-fwify')
+  , bifywify   = require('bify-wify')
   , karma      = require('karma')
   , Thunk      = require('kathunk')
 
