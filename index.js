@@ -1,10 +1,8 @@
 var Selfish     = require('selfish-js')
-  , Thunk       = require('kathunk')
+  , Const       = require('const')
   , Class       = require('./class')
   , ClassMedium = require('./class-medium')
   , Moddable    = require('./moddable')
-  , IsInstance  = require('./class-is-instance')
-  , Compose     = require('./compose')
 
 var ClassyBase = function (constructor) {
   if (!constructor)
@@ -13,4 +11,4 @@ var ClassyBase = function (constructor) {
     return Class(constructor)
 }
 
-module.exports = Selfish.simple(Thunk, ClassyBase)
+module.exports = Selfish.simple(Const, ClassyBase)

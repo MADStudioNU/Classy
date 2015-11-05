@@ -1,7 +1,6 @@
 var gulp       = require('gulp')
   , bifywify   = require('bify-wify')
   , karma      = require('karma')
-  , Thunk      = require('kathunk')
 
 function Do () {
   var args = [].slice.call(arguments, 1)

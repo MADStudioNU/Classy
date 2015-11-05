@@ -1,11 +1,11 @@
 var Selfish   = require('selfish-js')
-  , Thunk     = require('kathunk')
+  , Const     = require('const')
   , Moddable  = require('./moddable')
 
 // NOTE(jordan): this gets fairly convoluted. Could it be better?
 
 function ClassyClass (constructor, classModules) {
-  var Constructor = Thunk (
+  var Constructor = Const (
     function () {
       var args = [].slice.call(arguments)
       return Selfish.variadic.any([ constructor ].concat(args))

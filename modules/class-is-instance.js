@@ -1,5 +1,3 @@
-var Thunk = require('kathunk')
-
 var Memo = function (action) {
   var args = [].slice.call(arguments, 1)
     , value = undefined

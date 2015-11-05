@@ -1,12 +1,12 @@
 
 var Selfish = require('selfish-js')
-  , Thunk   = require('kathunk')
+  , Const   = require('const')
   , eff     = require('./eff')
 
 function Moddable (definition, base, mods) {
   var moddable
 
-  base     = (base instanceof Function) ? base : Thunk
+  base     = (base instanceof Function) ? base : Const
   mods     = (mods instanceof Array)    ? mods : [ ]
 
   moddable = Selfish.simple(definition, base())

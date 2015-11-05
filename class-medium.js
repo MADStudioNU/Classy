@@ -1,5 +1,5 @@
 var Selfish     = require('selfish-js')
-  , Thunk       = require('kathunk')
+  , Const       = require('const')
   , ClassyClass = require('./class')
   , Moddable    = require('./moddable')
 
@@ -9,7 +9,7 @@ var Medium = function (medium) {
 
     Moddable.append(newClassModules, classModules)
 
-    return Moddable(Medium, Thunk, newClassModules)
+    return Moddable(Medium, Const, newClassModules)
   }
 
   medium.define = function (constructor) {
@@ -17,4 +17,4 @@ var Medium = function (medium) {
   }
 }
 
-module.exports = Thunk(Moddable(Medium))
+module.exports = Const(Moddable(Medium))
