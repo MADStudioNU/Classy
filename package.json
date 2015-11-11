@@ -37,6 +37,7 @@
   "dependencies": {
     "bify-wify": "^1.0.3",
     "const": "^1.0.0",
+    "extend": "^3.0.0",
     "selfish-js": "^1.0.0"
   }
 }
