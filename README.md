@@ -26,16 +26,14 @@ using function and prototypes, you can use Classy Classes instead.
 
 Classy:
 
-  * Very few assumptions about how you will use it
-    * Class Instances don't have any default methods or fields
-    * Neither do Classes
-  * `self` instead of `this` (powered by [Selfish](https://github.com/mmlc/selfish))
+  * Creates JS objects
+  * Is entirely compositional, supports multiple inheritance
+  * Has no contextual `this` (powered by [Selfish](https://github.com/mmlc/selfish))
     * `self` is always your class instance
-    * No weird stuff like `arr.push.bind(arr)`: there's no "context," only `self`
   * [Completely Bare by default](#what-exactly-do-you-mean-by-bare-by-default)
-  * Entirely compositional
-  * Multiple inheritance (via composition)
-  * Simple syntax (see [Usage](#usage) for more examples):
+  * Makes very few assumptions about how you will use it
+  * Adds features from the ground up using plugin modules
+  * Has a syntax so simple, a cat sitting on your keyboard could do it (see [Usage](#usage) for more examples):
 
   ```js
     var aClass = Classy(function (self) {
@@ -47,16 +45,16 @@ Classy:
 ## Usage
 ### Show me some code
 
-Classy classes are completely empty by default:
-
 ```js
-var EmptyClass = Classy(function () {})
+var TrivialClass = Classy(function () {})
 
-EmptyClass()
+TrivialClass()
 ```
 
-will return an Object (`{}`) that has absolutely no fields or methods, and
-no prototype.
+Is the simplest possible Classy Class.
+
+This will return an Object (`{}`) that has absolutely no fields or methods,
+and no prototype.
 
 ### Adding Features
 
