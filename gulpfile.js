@@ -6,7 +6,7 @@ function Do () {
   var args = [].slice.call(arguments, 1)
     , action = arguments[0]
   return function () {
-    action.apply(null, args)
+    return action.apply(null, args)
   }
 }
 
