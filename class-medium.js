@@ -1,13 +1,14 @@
 var Selfish     = require('selfish-js')
   , Const       = require('const')
   , ClassyClass = require('./class')
-  , Moddable    = require('./moddable')
+  , Moddable    = require('./lib/moddable')
+  , eff         = require('./lib/eff')
 
 var Medium = function (medium) {
   medium.use = function (classModules) {
     var newClassModules = [ ].slice.call(medium.mods)
 
-    Moddable.append(newClassModules, classModules)
+    eff.pushEach(newClassModules, classModules)
 
     return Moddable(Medium, Const, newClassModules)
   }

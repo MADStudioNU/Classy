@@ -2,7 +2,7 @@ var Selfish     = require('selfish-js')
   , Const       = require('const')
   , Class       = require('./class')
   , ClassMedium = require('./class-medium')
-  , Moddable    = require('./moddable')
+  , Moddable    = require('./lib/moddable')
 
 var ClassyBase = function (constructor) {
   if (!constructor)
