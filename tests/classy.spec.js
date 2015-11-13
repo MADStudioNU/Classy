@@ -1,6 +1,6 @@
 var Classy     = require('..')
-  , IsInstance = require('../modules/class-is-instance')
-  , Compose    = require('../modules/compose')
+  , IsInstance = require('../core/is-instance')
+  , Compose    = require('../core/compose')
 
 describe('Classy', function () {
   var c = Classy(function (self) {})
