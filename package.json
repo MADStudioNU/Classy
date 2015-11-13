@@ -4,7 +4,8 @@
   "description": "A demure class constructor constructor. Extensible, simple, bare.",
   "repository": "http://github.com/mmlc/classy",
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "prepublish": "git submodule init && git submodule update"
   },
   "keywords": [
     "classy",
