@@ -5,7 +5,7 @@ var Classy     = require('..')
 describe('Classy', function () {
   var c = Classy(function (self) {})
 
-  it('Can create a new ClassyClass', function () {
+  it('Can create a new ClassyClass (shorthand)', function () {
     expect(c).toBeDefined()
     expect(c).toEqual(jasmine.any(Function))
   })
@@ -18,10 +18,10 @@ describe('Classy', function () {
     expect(c()).not.toBe(c())
   })
 
-  var cm = Classy()
-
   it('Creates customizable class-mediums', function () {
-    var AThing = cm.use(IsInstance)
+    var AMedium = Classy().use(IsInstance)
+
+    var AThing = AMedium
       .define(function (self) {
         self.a = 'a'
       })
@@ -36,14 +36,14 @@ describe('Classy', function () {
   })
 
   it('Creates customizable class-definitions', function () {
-    var Animal = Classy()
-                   .use(IsInstance)
+    var Medium = Classy().use(IsInstance)
+
+    var Animal = Medium
                    .define(function (animal, type) {
                      animal.type = type
                    })
 
-    var Dog = Classy()
-                .use(IsInstance)
+    var Dog = Medium
                 .define(function (dog, name) {
                   dog.name = name
                 })
