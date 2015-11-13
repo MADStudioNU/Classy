@@ -1,7 +1,6 @@
 # Classy
-### The demure class constructor constructor
-#### (Yes, [class constructor constructor](http://blog.fluffywaffles.io/classy).)
-#### It's also often faster than function
+### A simply demure class library.
+### All Composition: All Class.
 
 Author: [Jordan Timmerman (@skorlir)](https://github.com/skorlir)
 
@@ -9,15 +8,18 @@ Built at the [Northwestern University WCAS Multimedia Learning Center](https://g
 
 [![Build Status](https://travis-ci.org/mmlc/Classy.svg?branch=master)](https://travis-ci.org/mmlc/Classy)
 
-## What
+## What is this and Why
 
-With good manners, and the right utensils, you can do anything.
+Classy is a crazy experiment in just how far you can go, and just how little
+you really need, to create useful, versatile, extensible class objects in
+Javascript.
 
-Put another way: you don't need prototypes. You don't need Classes. You don't need `super`
-or `interface`. With a small set of powerful functions for composing simple data structures,
-you can build anything.
+This is the premise:
 
-That's Classy. The no-system class system. It's just composition.
+You don't need prototypes. You don't need `class`. You don't need `super`
+or `extend`. With a small set of powerful functions for composing simple data structures, you can build anything.
+
+It's a no-class class system. It's simple. It's Classy.
 
 ## Features
 
@@ -27,8 +29,8 @@ using function and prototypes, you can use ClassyClasses instead.
   * ClassyClasses are objects ([using Object.create(null)](#bare-by-default))
   * Everything is defined with composition
   * Every feature is a plugin, defined as a composeable function
-  * Has no contextual `this` (powered by [Selfish](https://github.com/mmlc/selfish))
-  * Syntax so simple your cat could sit on your keyboard and use it by accident
+  * There's no contextual `this` (powered by [Selfish](https://github.com/mmlc/selfish))
+  * The syntax is so simple your cat could sit on your keyboard and use it by accident
 
   ```js
     var aClass = Classy(function (self) {
@@ -54,7 +56,7 @@ and no prototype.
 
 ### Adding Features
 
-Composition is first-class in Classy, and everythin that Classy does is an
+Composition is first-class in Classy, and everything that Classy does is an
 application of composition.
 
 Check it out:
