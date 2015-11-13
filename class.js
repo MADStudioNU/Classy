@@ -14,11 +14,13 @@ function ClassyClass (constructor, classModules) {
   )
 
   function Class (classyClass) {
-    if (classModules instanceof Array)
+    if (classModules instanceof Array) {
       eff.callEach(classyClass, classModules)
+    }
 
-    if (!classyClass.__instModules)
+    if (!classyClass.__instModules) {
       classyClass.__instModules = [ ]
+    }
 
     classyClass.use = function (instModules) {
       var newInstModules = [].slice.call(classyClass.__instModules)

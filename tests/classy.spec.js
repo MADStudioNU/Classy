@@ -1,3 +1,5 @@
+/* global jasmine, describe, it, expect */
+
 var Classy     = require('..')
   , IsInstance = require('../core/is-instance')
   , Compose    = require('../core/compose')

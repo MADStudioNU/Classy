@@ -1,5 +1,4 @@
-var Selfish     = require('selfish-js')
-  , Const       = require('const')
+var Const       = require('const')
   , ClassyClass = require('./class')
   , Moddable    = require('./lib/moddable')
   , eff         = require('./lib/eff')
