@@ -34,12 +34,12 @@
     "phantomjs": "^1.9.18",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
+    "bify-wify": "^1.0.3",
+    "extend": "^3.0.0",
     "watchify": "^3.4.0"
   },
   "dependencies": {
-    "bify-wify": "^1.0.3",
     "const": "^1.0.0",
-    "extend": "^3.0.0",
     "selfish-js": "^1.0.0"
   }
 }
