@@ -1,11 +1,11 @@
 {
   "name": "classy-js",
-  "version": "1.0.7",
+  "version": "2.0.0",
   "description": "A demure class constructor constructor. Extensible, simple, bare.",
-  "main": "src/index.js",
   "repository": "http://github.com/mmlc/classy",
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "prepublish": "git submodule init && git submodule update"
   },
   "keywords": [
     "classy",
@@ -35,5 +35,11 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.4.0"
+  },
+  "dependencies": {
+    "bify-wify": "^1.0.3",
+    "const": "^1.0.0",
+    "extend": "^3.0.0",
+    "selfish-js": "^1.0.0"
   }
 }

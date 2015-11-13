@@ -1,49 +1,40 @@
 var gulp       = require('gulp')
-  , gutil      = require('gulp-util')
-  , source     = require('vinyl-source-stream')
-  , buffer     = require('vinyl-buffer')
-  , browserify = require('browserify')
-  , watchify   = require('watchify')
+  , bifywify   = require('bify-wify')
   , karma      = require('karma')
 
-gulp.task('bundle', [], function () {
-
-  var b = browserify({
-    entries: 'src',
-    paths: [ 'src', '.' ]
-  })
-
-  b.on('log', gutil.log)
-
-  return b.bundle()
-    .pipe(source('classy.bundle.js'))
-    .pipe(buffer())
-    .pipe(gulp.dest('dist/'))
-})
-
-gulp.task('bundle:watch', [], function () {
-  var b = browserify({
-    debug: true,
-    entries: 'src',
-    paths: [ 'src', '.' ]
-  })
-
-  function bundle() {
-    return b.bundle()
-      .pipe(source('classy.bundle.js'))
-      .pipe(buffer())
-      .pipe(gulp.dest('dist/'))
+function Do () {
+  var args = [].slice.call(arguments, 1)
+    , action = arguments[0]
+  return function () {
+    return action.apply(null, args)
   }
+}
 
-  b = watchify(b);
+gulp.task('bundle:standalone', Do (
+  bifywify.fbify, 'index.js', 'classy.bundle.js', { standalone: 'Classy' }
+))
 
-  b.on('log', gutil.log)
-  b.on('update', bundle);
+gulp.task('bundle:standalone:watch', Do (
+  bifywify.fwify, 'index.js', 'classy.bundle.js', { standalone: 'Classy' }
+))
 
-  bundle();
-})
+gulp.task('bundle:src', Do (
+  bifywify.fbify, 'index.js', 'classy.bundle.js'
+))
 
-gulp.task('test', [ 'bundle' ], function (done) {
+gulp.task('bundle:src:watch', Do (
+  bifywify.fwify, 'index.js', 'classy.bundle.js'
+))
+
+gulp.task('bundle:test', Do (
+  bifywify.fbify, 'tests/classy.spec.js', 'classy.spec.js'
+))
+
+gulp.task('bundle:test:watch', Do (
+  bifywify.fwify, 'tests/classy.spec.js', 'classy.spec.js'
+))
+
+gulp.task('test', [ 'bundle:test' ], function (done) {
   var server = new karma.Server({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true
@@ -51,7 +42,7 @@ gulp.task('test', [ 'bundle' ], function (done) {
   server.start();
 })
 
-gulp.task('test:travis', [ 'bundle' ], function (done) {
+gulp.task('test:travis', [ 'bundle:test' ], function (done) {
   var server = new karma.Server({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true,
@@ -60,11 +51,9 @@ gulp.task('test:travis', [ 'bundle' ], function (done) {
   server.start();
 })
 
-gulp.task('tdd', [ 'bundle:watch' ], function (done) {
+gulp.task('tdd', [ 'bundle:test:watch' ], function (done) {
   var server = new karma.Server({
     configFile: __dirname + '/karma.conf.js',
   }, done)
   return server.start();
 })
-
-gulp.task('default', [ 'bundle' ]);

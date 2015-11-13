@@ -1,7 +1,7 @@
 # Classy
 ### The demure class constructor constructor
 #### (Yes, [class constructor constructor](http://blog.fluffywaffles.io/classy).)
-#### It's also often [faster than function](http://jsperf.com/classy-vs-function-real-world-init-only/3#results).
+#### It's also often faster than function
 
 Author: [Jordan Timmerman (@skorlir)](https://github.com/skorlir)
 
@@ -9,259 +9,164 @@ Built at the [Northwestern University WCAS Multimedia Learning Center](https://g
 
 [![Build Status](https://travis-ci.org/mmlc/Classy.svg?branch=master)](https://travis-ci.org/mmlc/Classy)
 
+## What
+
+With good manners, and the right utensils, you can do anything.
+
+Put another way: you don't need prototypes. You don't need Classes. You don't need `super`
+or `interface`. With a small set of powerful functions for composing simple data structures,
+you can build anything.
+
+That's Classy. The no-system class system. It's just composition.
+
 ## Features
 
-Classy is a constructor for classes. Anyplace you might imagine yourself using a `function` to make a class, you can use Classy instead.
+Classy is a composeable class constructor constructor. Anyplace you might imagine yourself
+using function and prototypes, you can use ClassyClasses instead.
 
-**Here are some of the features of Classy:**
-  * Substitutes `self` for `this` - and `self` is *always* your class instance, even in callbacks
-  * Provides a simple syntax (see [Usage](#usage) for more examples):
+  * ClassyClasses are objects ([using Object.create(null)](#bare-by-default))
+  * Everything is defined with composition
+  * Every feature is a plugin, defined as a composeable function
+  * Has no contextual `this` (powered by [Selfish](https://github.com/mmlc/selfish))
+  * Syntax so simple your cat could sit on your keyboard and use it by accident
+
+  ```js
+    var aClass = Classy(function (self) {
+        self.field = 'value'
+        self.method = function () {}
+        // return is implied
+    })
+  ```
+
+## Usage
+### Show me some code
+
 ```js
-  var aClass = Classy(function (self) {
-      self.field = 'value';
-      self.method = function () {};
+var TrivialClass = Classy(function () {})
+
+TrivialClass()
+```
+
+Is the simplest possible Classy Class.
+
+This will return an Object (`{}`) that has absolutely no fields or methods,
+and no prototype.
+
+### Adding Features
+
+Composition is first-class in Classy, and everythin that Classy does is an
+application of composition.
+
+Check it out:
+
+```js
+// A couple of features we want to mix in
+var IsInstance = require('classy-js/core/is-instance')
+  , ToString   = require('classy-js/core/to-string')
+  , Compose    = require('classy-js/core/compose')
+
+var Classy = require('classy-js')
+
+// We want all our ClassyClasses to have `isInstance`, so let's create
+//  a "class medium" for creating ClassyClasses that have it.
+var Medium = Classy().use(IsInstance)
+
+// Now we can `define` classes from that Medium
+var Animal = Medium.define(function (animal, type) {
+  animal.type = type
+})
+
+// Equivalently, we could have done:
+var Animal = Classy()
+  .use(IsInstance)
+  .define(function (animal, type) {
+    animal.type = type
   })
+
+// But using a Medium makes things a bit cleaner.
+
+// Let's use that Animal class.
+var Dog = Medium
+  .use(ToString) // You can add another feature to the medium just for Dog
+  .define(function (dog, name) {
+    dog.name = name
+  })
+  .use(Compose(Animal, 'Dog'))
+
+// So now Dog is "composed with" Animal.
+// Let's add in some Dog actions.
+
+// Dogs can bark
+function Bark (dog) {
+  dog.bark = function () {
+    return dog.name + ' is barking! Woof! Woof!'
+  }
+}
+
+// They can wag their tails
+function WagTail (dog) {
+  dog.wagTail = function () {
+    return dog.name + ' is wagging his tail!'
+  }
+}
+
+// Okay, let's compose those into Dog
+Dog = Dog.use([ Bark, WagTail, ToString ])
+// Notice that we can also add ToString to Dog here
+// We added ToString to the Dog _class_, and now we're adding it to
+//   every Dog _instance_.
+
+// Let's play around with our new ClassyClasses!
+
+Dog.toString()
+// => Dog { toString: fn, isInstance: fn, constructor: function (dog...) {...} }
+
+var fido = Dog('Fido')
+// => { name: 'Fido', type: 'Dog', bark: fn, wagTail: fn, toString: fn }
+
+fido.bark()     // => 'Fido is barking! Woof! Woof!'
+fido.wagTail()  // => 'Fido is wagging his tail!'
+fido.type       // => 'Dog'
+fido.toString()
+// => { name: 'Fido', type: 'Dog', bark: fn, wagTail: fn, toString: fn }
+
+// We can check instances, too:
+Animal.isInstance(fido) // true
+Dog.isInstance(fido)    // true
+Dog.isInstance(extend({}, fido, { type: 'Cat' }))    // false
+Animal.isInstance(extend({}, fido, { type: 'Cat' })) // true
+
 ```
-  * [No Baggage](#gets-rid-of-baggage-what)
-  * Often [faster than `new function () { ... }`](http://jsperf.com/classy-vs-function#results)
-  * It's [Modular](./MODULES.README.md) and easy to customize
-  * Including a module for writing Class [Extensions](#and-what-are-extensions)
 
-## Explanation
-### Overview of Classy
+### Bare by Default
 
-All the features of Classy are opt-in only.
+Because ClassyClasses use Object.create(null) as their basis, classes
+are entirely bare by default - this is why every feature is a plugin,
+and why ClassyClasses have no prototypes or `this`.
 
-Even Classy Extensions are actually provided by a Classy Module. Which means you can opt-out pretty easily - just `require('classy/base')` instead, and bam! no extensions, no `Classy.extend`.
-
-If you want a detailed explanation of the design, check out [design.md](./DESIGN.md).
-
-### Gets rid of baggage? What?
-
-Functions have *baggage*. Classy classes *don't*.
-
-In fact, Classy classes are completely empty by default:
-
-```js
-var EmptyClass = Classy(); EmptyClass();
-```
-
-will return an Object (`{}`) that has absolutely no fields or methods.
-
-Maybe it's unfair to call prototypes "baggage." Whatever. You still don't need it.
-
-####Here's a more drawn-out example:
+Here's an explicit, albeit contrived, example:
 
 ```js
 var Truth = Classy(function (self) {
- self.life = 42;
-});
-// => Classy$Class () { ... }
+ self.life = 42
+})
 
-var theTruth = Truth();
+var theTruth = Truth()
 // => { life: 42 }
 
-theTruth.prototype;
+theTruth.prototype
 // => undefined
-Object.getPrototypeOf(theTruth);
+
+Object.getPrototypeOf(theTruth)
 // => null
 
 for (var fact in theTruth) {
- console.log('The Truth is ', fact, '=', theTruth[fact]);
+ console.log('The Truth is ', fact, '=', theTruth[fact])
 }
-// => The Truth is life = 42
+// [logged]: The Truth is life = 42
 
-[ 'toString', 'valueOf', 'isPrototypeOf', 'hasOwnProperty' ].map(function (baggage) {
- if (theTruth[baggage]) return baggage;
+[ 'toString', 'valueOf', 'isPrototypeOf', 'hasOwnProperty' ].map(function (junk) {
+ if (theTruth[junk]) return junk
 })
 // => []
 ```
-
-### And what are extensions?
-
-Extensions are an opt-in system (implemented as a [Module](./MODULES.README.md)) for
-adding default fields to classes.
-
-For example, if you want all your classes to have a `toString` method:
-
-```js
-var Classy$Extensible = require('classy')
-  , CX = require('classy/examples/extensions')
-
-var CustomClassy = Classy$Extensible.extend(CX.toString);
-```
-
-You can write your own extensions, too:
-
-```js
-var Classy$Extensible = require('classy')
-
-var MyClassyExtension = function (self) {
-
-  // add fields or methods or whatever to self here!
-
-}
-
-var CustomClassy = Classy$Extensible.extend(MyClassyExtension);
-```
-
-By using extensions, Classy doesn't make any assumptions about what you do or don't want
-  in your classes. This gives you the freedom to make your class objects as lightweight
-  or as complex as you want!
-
-**Publishing extensions to NPM**: If you want to publish a Classy Extension to NPM,
-  make sure to add the keyword `classy-extension` to your package.json before publishing.
-
-## Usage
-
-Using Classy looks like this:
-
-```js
-Classy([nArgs], function selfFunction (self, [constructorArgs]) {
-  // class body ...
-})
-```
-
-where `selfFunction` is the constructor for the class. `selfFunction`'s first argument is always `self`: the class instance. (Think of `self` as a non-contextual replacement for `this`.) Additional arguments to `selfFunction` refer to arguments passed in to the constructor.
-
-Classy has two usage methods, and their separation is purely for the sake of optimization. They are *variadic* and *simple* (meaning *with* and *without* arguments).
-
-As the name implies, *simple* is faster than *variadic*. But *variadic* is also faster for 3 or fewer arguments than it is with 4 or more.
-
-(`Classy$Class$Variadic` could be optimized for higher numbers of arguments, but most of the time if you think you need more than 3 arguments you actually need more than 1 function. :wink:)
-
-Classy is also *extensible*. This means you can create new instances of Classy that add default fields and methods to `self` - look at the usage examples for a better overview.
-
-Classy comes with a small number of example extensions; you can find those in [examples/extensions](./examples/extensions). Go ahead, look at the code! They're simple enough they don't need explaining.
-
-### Examples
-#### Simple Classy
-
-```js
-var aClass = Classy(function (self) {
- self.a = 5
- self.b = '7'
- self.c = self.a + +self.b
-})
-// => Classy$Class () { ... }
-
-var a = aClass();
-// => { a: 5, b: '7', c: 12 }
-```
-
-#### Variadic Classy
-#### (AKA Classy with Arguments)
-
-```js
-// Passing in the number of args is an optimization
-var ProperName = Classy(2, function (self, title, name) {
-  self.title = title
-  self.name  = name
-  self.proper = function () {
-    return [ self.title, self.name ].join(' ')
-  }
-  self.greet = function (anotherProperName) {
-    return 'Why, hello ' + anotherProperName.proper() + '!'
-  }
-}) // => Classy$Class () { ... }
-
-var MrFrederick = ProperName('Mr.', 'Frederick')
-// => { title: 'Mr.', name: 'Frederick', proper: fn, greet: fn }
-var MsJones     = ProperName('Ms.', 'Jones')
-// => { title: 'Ms.', name: 'Jones', proper: fn, greet: fn }
-
-MrFrederick.proper()
-// => 'Mr. Frederick'
-
-MrFrederick.greet(MsJones)
-// => 'Why, hello Ms. Jones!'
-
-MrFrederick.title = 'Baron von'
-MsJones.greet(MrFrederick)
-// => 'Why, hello Baron von Frederick!'
-```
-
-#### Classy Extensions
-
-```js
-// Let's make a new Classy Constructor that extends our default `self`
-var Library = Classy.extend(function (self) {
-
-  self.books = []
-
-  self.addBook = function (book) {
-    self.books.push(book)
-  }
-
-})
-// => Classy$Extended (nArgs, constructor) { ... }
-
-// Now we can create various types of Library classes.
-var LendingLibrary = Library(function (self) {
-
-  self.checkoutBook = function (borrower, title) {
-    var book;
-
-    self.books.forEach(function (b) {
-      if (b.title == title) book = b;
-    })
-
-    if (book) {
-      book.available = false;
-      book.checkedOutTo = borrower;
-      return book;
-    }
-  }
-
-})
-// => Classy$Class$Extended () { ... }
-
-var PrivateLibrary = Library(1, function (self, owner) {
-
-  self.owner = owner;
-
-})
-// => Classy$Class$Extended () { ... }
-
-// And now you can just... use 'em!
-var aPublicLibrary = LendingLibrary();
-// => { books: [] }
-
-aPublicLibray.addBook({
-  title: 'Calculus n Stuff',
-  author: 'Isaac Newton'
-});
-// => undefined
-
-var johnsLibrary = PrivateLibrary('John');
-// => { books: [], owner: 'John' }
-
-var CalculusNStuff = aPublicLibrary.checkoutBook('John', 'Calculus n Stuff');
-// => { title: 'Calculus n Stuff', author ... }
-
-// Oh no! John is stealing a book from the public library... Bad John.
-johnsLibrary.addBook(CalculusNStuff);
-// => undefined
-
-```
-
-## Results & Constraints:
-
-* You don't have to use the `new` keyword. In fact, don't.
-    * **Why?** The point of `new` is to create a new object for `this`, and then
-      to populate it with the Function prototype and call your constructor on it.
-      Since Classy does not use `this`, `new` just adds pointless overhead.
-      Besides, it's cleaner this way. Follow a convention like Title-Casing
-      class names instead. (That said, it does work to use `new`, if you insist.)
-
-* You cannot use `instanceof` on Classy Classes.
-    * **Why?** They have no prototype. `instanceof` isn't so great anyway. That said,
-      a Classy Class Module could be written to provide this functionality. Actually,
-      I went ahead and [wrote one](./src/classy/modules/class/is-instance.js).
-
-* Classy creates an optimized `Classy$Class` constructor for 0, 1, 2, or 3 argument
-    classes. Classes with more than 3 arguments will result in a `Classy$Class$Variadic`
-    instead of a fixed-argument `Classy$Class`, and performance falls off due
-    to an additional call to `Function.apply`.
-
-### Get Classy!
