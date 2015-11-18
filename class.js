@@ -24,6 +24,7 @@ function ClassyClass (constructor, classModules) {
 
     classyClass.use = function (instModules) {
       var newInstModules = [].slice.call(classyClass.__instModules)
+      eff.pushEach(newInstModules, instModules)
       /* NOTE(jordan): here's where it gets tricky
        * push the constructor onto the new modules
        * (notice the constructor contains a built-up composition of all
