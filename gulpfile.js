@@ -29,7 +29,7 @@ gulp.task('bundle:src:watch', Run (
 gulp.task('bundle:test', Run (
   bifywify.fbify, 'tests/classy.spec.js', 'classy.spec.js'
 ))
-g
+
 gulp.task('bundle:test:watch', Run (
   bifywify.fwify, 'tests/classy.spec.js', 'classy.spec.js'
 ))
