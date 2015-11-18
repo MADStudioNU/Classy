@@ -2,7 +2,7 @@ var gulp       = require('gulp')
   , bifywify   = require('bify-wify')
   , karma      = require('karma')
 
-function Do () {
+function Run () {
   var args = [].slice.call(arguments, 1)
     , action = arguments[0]
   return function () {
@@ -10,27 +10,27 @@ function Do () {
   }
 }
 
-gulp.task('bundle:standalone', Do (
+gulp.task('bundle:standalone', Run (
   bifywify.fbify, 'index.js', 'classy.bundle.js', { standalone: 'Classy' }
 ))
 
-gulp.task('bundle:standalone:watch', Do (
+gulp.task('bundle:standalone:watch', Run (
   bifywify.fwify, 'index.js', 'classy.bundle.js', { standalone: 'Classy' }
 ))
 
-gulp.task('bundle:src', Do (
+gulp.task('bundle:src', Run (
   bifywify.fbify, 'index.js', 'classy.bundle.js'
 ))
 
-gulp.task('bundle:src:watch', Do (
+gulp.task('bundle:src:watch', Run (
   bifywify.fwify, 'index.js', 'classy.bundle.js'
 ))
 
-gulp.task('bundle:test', Do (
+gulp.task('bundle:test', Run (
   bifywify.fbify, 'tests/classy.spec.js', 'classy.spec.js'
 ))
-
-gulp.task('bundle:test:watch', Do (
+g
+gulp.task('bundle:test:watch', Run (
   bifywify.fwify, 'tests/classy.spec.js', 'classy.spec.js'
 ))
 
