@@ -38,9 +38,7 @@ describe('Classy', function () {
   })
 
   it('Creates customizable class-definitions', function () {
-    var Medium = Classy().use([IsInstance, Compose])
-
-    console.log(Medium)
+    var Medium = Classy().use([ IsInstance, Compose ])
 
     var Animal = Medium
                    .define(function (animal, type) {
