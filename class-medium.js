@@ -1,20 +1,20 @@
 var Const       = require('const')
   , ClassyClass = require('./class')
   , Moddable    = require('./lib/moddable')
-  , eff         = require('./lib/eff')
+  , Selfish     = require('selfish-js')
 
-var Medium = function (medium) {
-  medium.use = function (classModules) {
-    var newClassModules = [ ].slice.call(medium.mods)
+var MediumDefinition = function (medium, mediumModules) {
+  eff.callEach(medium, mediumModules)
 
-    eff.pushEach(newClassModules, classModules)
-
-    return Moddable(Medium, Const, newClassModules)
+  medium.use = function (newClassModules) {
+    return Selfish.simple(Moddable(newClassModules), medium)
   }
 
   medium.define = function (constructor) {
-    return ClassyClass(constructor, medium.mods)
+    return ClassyClass(medium._appliedMods)
   }
 }
 
-module.exports = Const(Moddable(Medium))
+module.exports = function Medium (modules)  {
+  return Selfish.variadic[1]([ MediumDefinition, modules ], Moddable())
+}
