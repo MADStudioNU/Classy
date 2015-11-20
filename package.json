@@ -39,7 +39,6 @@
     "watchify": "^3.4.0"
   },
   "dependencies": {
-    "const": "^1.0.0",
     "selfish-js": "^1.0.0"
   }
 }
