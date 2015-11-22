@@ -1,6 +1,6 @@
 {
   "name": "classy-js",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "description": "A demure class constructor constructor. Extensible, simple, bare.",
   "repository": "http://github.com/mmlc/classy",
   "scripts": {
@@ -39,7 +39,6 @@
     "watchify": "^3.4.0"
   },
   "dependencies": {
-    "const": "^1.0.0",
     "selfish-js": "^1.0.0"
   }
 }
